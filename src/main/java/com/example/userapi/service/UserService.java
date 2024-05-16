@@ -44,6 +44,7 @@ public class UserService {
             user.setEmail(updatedUser.getEmail());
             user.setPhoneNumber(updatedUser.getPhoneNumber());
             user.setOrganization(updatedUser.getOrganization());
+            user.setRole(updatedUser.getRole());
             userRepository.save(user);
         } else {
             System.out.println("Id of user is not found !");

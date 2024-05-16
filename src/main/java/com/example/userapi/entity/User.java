@@ -14,18 +14,19 @@ public class User {
     private String email;
     private long phoneNumber;
     private String organization;
-    // TODO: Add role object in user as an attribute
+    private Role role;
 
     public User() {
     }
 
-    public User(long id, String firstName, String lastName, String email, long phoneNumber, String organization) {
+    public User(long id, String firstName, String lastName, String email, long phoneNumber, String organization, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.organization = organization;
+        this.role = role;
     }
 
     public long getId() {
@@ -76,6 +77,14 @@ public class User {
         this.organization = organization;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -85,6 +94,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", organization='" + organization + '\'' +
+                ", role=" + role +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.example.userapi.dto;
 
+import com.example.userapi.entity.Role;
 import lombok.*;
 
 @Builder
@@ -13,4 +14,5 @@ public class UserDto {
     private String email;
     private long phoneNumber;
     private String organization;
+    private Role role;
 }
