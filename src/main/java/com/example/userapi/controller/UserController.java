@@ -1,12 +1,11 @@
 package com.example.userapi.controller;
 
-import com.example.userapi.entity.User;
+import com.example.userapi.dto.UserDto;
 import com.example.userapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/users")
@@ -22,29 +21,29 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> findAllUsers() {
+    public List<UserDto> findAllUsers() {
         return userService.getUsers();
     }
 
     @GetMapping(path = "/{userId}")
-    public Optional<User> findUserById(@PathVariable long userId) {
+    public UserDto findUserById(@PathVariable long userId) {
         return userService.getUser(userId);
     }
 
 
     @PostMapping
-    public void addNewUser(@RequestBody User user) {
-        userService.addNewUser(user);
+    public UserDto addNewUser(@RequestBody UserDto userDto) {
+        return userService.addNewUser(userDto);
     }
 
     @DeleteMapping(path = "/{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId) {
+    public void deleteUser(@PathVariable("userId") Long userId) throws Exception {
         userService.deleteUser(userId);
     }
 
     @PutMapping(path = "/{userId}")
-    public void updateUser(@PathVariable Long userId, @RequestBody User user) {
-        userService.updateUser(userId, user);
+    public void updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) throws Exception {
+        userService.updateUser(userId, userDto);
     }
 
 }
