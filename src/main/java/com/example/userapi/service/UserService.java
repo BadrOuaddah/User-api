@@ -13,6 +13,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     // TODO: Add init testing for test service layer
+    // todo: add customer exception / search for @ControllerAdviser
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -29,19 +30,19 @@ public class UserService {
 
     public UserDto getUser(long id) {
         Optional<User> userOptional = userRepository.findById(id);
-        return userMapper.toDTO(userOptional.get());
+        return userMapper.map(userOptional.get());
     }
 
     public UserDto addNewUser(UserDto userDto) {
-        User saved = userRepository.save(userMapper.toEntity(userDto));
-        return userMapper.toDTO(saved);
+        User saved = userRepository.save(userMapper.map(userDto));
+        return userMapper.map(saved);
     }
 
     public UserDto updateUser(Long userId, UserDto userDto) throws Exception {
         userRepository.findById(userId).orElseThrow(() -> new Exception("User not found with id : " + userId));
         userDto.setId(userId);
-        User userUpdated = userRepository.save(userMapper.toEntity(userDto));
-        return userMapper.toDTO(userUpdated);
+        User userUpdated = userRepository.save(userMapper.map(userDto));
+        return userMapper.map(userUpdated);
     }
 
     public void deleteUser(Long userId) throws Exception {
