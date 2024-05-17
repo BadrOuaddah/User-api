@@ -1,6 +1,8 @@
 package com.example.userapi.service;
 
+import com.example.userapi.dto.UserDto;
 import com.example.userapi.entity.User;
+import com.example.userapi.mapper.UserMapper;
 import com.example.userapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,43 +13,40 @@ import java.util.Optional;
 @Service
 public class UserService {
     // TODO: Add init testing for test service layer
-    // TODO: Convert methods from void to Object DTO (Add and Update methods)
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getUsers() {
+        List<User> users = userRepository.findAll();
+        return userMapper.toDTOs(users);
     }
 
-    public Optional<User> getUser(long id) {
-        return userRepository.findById(id);
+    public UserDto getUser(long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        return userMapper.toDTO(userOptional.get());
     }
 
-    public void addNewUser(User user) {
-        userRepository.save(user);
+    public UserDto addNewUser(UserDto userDto) {
+        User saved = userRepository.save(userMapper.toEntity(userDto));
+        return userMapper.toDTO(saved);
     }
 
-    public void deleteUser(Long userId) {
+    public UserDto updateUser(Long userId, UserDto userDto) throws Exception {
+        userRepository.findById(userId).orElseThrow(() -> new Exception("User not found with id : " + userId));
+        userDto.setId(userId);
+        User userUpdated = userRepository.save(userMapper.toEntity(userDto));
+        return userMapper.toDTO(userUpdated);
+    }
+
+    public void deleteUser(Long userId) throws Exception {
+        userRepository.findById(userId).orElseThrow(() -> new Exception("User not found with id : " + userId));
         userRepository.deleteById(userId);
     }
 
-    public void updateUser(Long userId, User updatedUser) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            user.setFirstName(updatedUser.getFirstName());
-            user.setLastName(updatedUser.getLastName());
-            user.setEmail(updatedUser.getEmail());
-            user.setPhoneNumber(updatedUser.getPhoneNumber());
-            user.setOrganization(updatedUser.getOrganization());
-            user.setRole(updatedUser.getRole());
-            userRepository.save(user);
-        } else {
-            System.out.println("Id of user is not found !");
-        }
-    }
 }
