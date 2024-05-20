@@ -13,7 +13,6 @@ import java.util.List;
 public class UserController {
     // TODO: Add integration testing to test endpoint
     // TODO: Add unit testing to test controller layer
-    // TODO: Configure Swagger to test API
     private final UserService userService;
 
     @Autowired
