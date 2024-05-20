@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
-    // todo: user lombok Like you did in userDto
+    // TODO: user lombok Like you did in userDto
     //      * generate toString with lombok
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

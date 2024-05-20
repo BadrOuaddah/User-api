@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     // TODO: Add init testing for test service layer
-    // todo: add customer exception / search for @ControllerAdviser
+    // TODO: add customer exception / search for @ControllerAdviser
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 

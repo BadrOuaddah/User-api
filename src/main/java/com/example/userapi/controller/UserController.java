@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/users")
+@CrossOrigin(origins = {"http://localhost:8081"})
 public class UserController {
     // TODO: Add integration testing to test endpoint
     // TODO: Add unit testing to test controller layer
