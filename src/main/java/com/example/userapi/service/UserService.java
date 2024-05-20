@@ -4,6 +4,7 @@ import com.example.userapi.dto.UserDto;
 import com.example.userapi.entity.User;
 import com.example.userapi.mapper.UserMapper;
 import com.example.userapi.repository.UserRepository;
+import com.example.userapi.serviceInterface.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
     // TODO: Add init testing for test service layer
     // TODO: add customer exception / search for @ControllerAdviser
     private final UserRepository userRepository;
