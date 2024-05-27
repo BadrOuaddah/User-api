@@ -3,16 +3,16 @@ package com.example.userapi.controller;
 import com.example.userapi.dto.UserDto;
 import com.example.userapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/users")
-@CrossOrigin(origins = {"http://localhost:8081"})
+@CrossOrigin(origins = "*")
 public class UserController {
-    // TODO: Add integration testing to test endpoint
-    // TODO: Add unit testing to test controller layer
     private final UserService userService;
 
     @Autowired
@@ -21,19 +21,19 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserDto> findAllUsers() {
-        return userService.getUsers();
+    public ResponseEntity<List<UserDto>> findAllUsers() {
+        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{userId}")
-    public UserDto findUserById(@PathVariable long userId) {
-        return userService.getUser(userId);
+    public ResponseEntity<UserDto> findUserById(@PathVariable long userId) throws Exception {
+        return new ResponseEntity<>(userService.getUser(userId), HttpStatus.OK);
     }
 
 
     @PostMapping
-    public UserDto addNewUser(@RequestBody UserDto userDto) {
-        return userService.addNewUser(userDto);
+    public ResponseEntity<UserDto> addNewUser(@RequestBody UserDto userDto) {
+        return new ResponseEntity<>(userService.addNewUser(userDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{userId}")
@@ -42,8 +42,8 @@ public class UserController {
     }
 
     @PutMapping(path = "/{userId}")
-    public void updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) throws Exception {
-        userService.updateUser(userId, userDto);
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) throws Exception {
+        return new ResponseEntity<>(userService.updateUser(userId, userDto), HttpStatus.OK);
     }
 
 }
