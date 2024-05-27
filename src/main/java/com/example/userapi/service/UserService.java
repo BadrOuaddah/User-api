@@ -5,6 +5,7 @@ import com.example.userapi.entity.User;
 import com.example.userapi.mapper.UserMapper;
 import com.example.userapi.repository.UserRepository;
 import com.example.userapi.serviceInterface.IUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserService implements IUserService {
-    // TODO: Add init testing for test service layer
-    // TODO: add customer exception / search for @ControllerAdviser
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -25,21 +25,25 @@ public class UserService implements IUserService {
     }
 
     public List<UserDto> getUsers() {
+        log.info("Fetching all users from the database.");
         List<User> users = userRepository.findAll();
         return userMapper.toDTOs(users);
     }
 
     public UserDto getUser(long id) {
+        log.info("Retrieving user details for user ID: {}", id);
         Optional<User> userOptional = userRepository.findById(id);
         return userMapper.map(userOptional.get());
     }
 
     public UserDto addNewUser(UserDto userDto) {
+        log.info("Adding a new user with the following details: {}", userDto);
         User saved = userRepository.save(userMapper.map(userDto));
         return userMapper.map(saved);
     }
 
     public UserDto updateUser(Long userId, UserDto userDto) throws Exception {
+        log.info("Updating user with ID: {}", userId);
         userRepository.findById(userId).orElseThrow(() -> new Exception("User not found with id : " + userId));
         userDto.setId(userId);
         User userUpdated = userRepository.save(userMapper.map(userDto));
@@ -47,6 +51,7 @@ public class UserService implements IUserService {
     }
 
     public void deleteUser(Long userId) throws Exception {
+        log.info("Deleting user with ID: {}", userId);
         userRepository.findById(userId).orElseThrow(() -> new Exception("User not found with id : " + userId));
         userRepository.deleteById(userId);
     }
