@@ -10,3 +10,7 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql
