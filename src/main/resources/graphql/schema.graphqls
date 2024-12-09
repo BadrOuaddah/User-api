@@ -1,0 +1,23 @@
+schema{
+    query:Query
+}
+
+type Query{
+    getAllUser:[User]
+}
+
+enum Role {
+    Admin
+    Manager
+    User
+}
+
+type User{
+    id:ID
+    firstName:String
+    lastName:String
+    email:String
+    phoneNumber:String
+    organization:String
+    role: Role
+}
