@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 
 import java.util.List;
 
@@ -44,6 +45,11 @@ public class UserController {
     @PutMapping(path = "/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) throws Exception {
         return new ResponseEntity<>(userService.updateUser(userId, userDto), HttpStatus.OK);
+    }
+
+    @QueryMapping
+    public List<UserDto> getAllUserQuery() {
+        return userService.getUsers();
     }
 
 }
