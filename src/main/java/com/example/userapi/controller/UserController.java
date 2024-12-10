@@ -3,6 +3,8 @@ package com.example.userapi.controller;
 import com.example.userapi.dto.UserDto;
 import com.example.userapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +52,16 @@ public class UserController {
     @QueryMapping
     public List<UserDto> getAllUserQuery() {
         return userService.getUsers();
+    }
+
+    @MutationMapping
+    public UserDto createUser(@Argument(value = "user") UserDto userDto) {
+        return userService.addNewUser(userDto);
+    }
+
+    @MutationMapping
+    public UserDto updateUser(@Argument long userId, @Argument(value = "user") UserDto userDto) throws Exception {
+        return userService.updateUser(userId, userDto);
     }
 
 }
