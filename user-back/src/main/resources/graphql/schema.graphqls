@@ -1,0 +1,41 @@
+scalar Long
+
+schema{
+    mutation:Mutation
+    query:Query
+}
+
+type Mutation{
+    createUser(user:UserInput):UserOutput
+    updateUser(userId:ID,user:UserInput):UserOutput
+}
+
+type Query{
+    getAllUserQuery:[UserOutput]
+}
+
+enum Role {
+    Admin
+    Manager
+    User
+}
+
+input UserInput{
+    id:ID
+    firstName:String
+    lastName:String
+    email:String
+    phoneNumber:Long
+    organization:String
+    role: Role
+}
+
+type UserOutput{
+    id:ID
+    firstName:String
+    lastName:String
+    email:String
+    phoneNumber:Long
+    organization:String
+    role: Role
+}
