@@ -1,41 +1,46 @@
 import React from "react";
-import axios from "axios";
+import { gql, useQuery } from "@apollo/client";
 
-export default class UserList extends React.Component {
-  state = {
-    users: [],
-  };
-
-  componentDidMount() {
-    axios.get(`http://localhost:8080/api/v1/users`).then((res) => {
-      const users = res.data;
-      this.setState({ users });
-    });
+const GET_ALL_USERS = gql`
+  query {
+    getAllUserQuery {
+      id
+      firstName
+      lastName
+      email
+      phoneNumber
+      organization
+      role
+    }
   }
+`;
 
-  render() {
-    return (
-      <div>
-        {this.state.users.map((user) => (
-          <div>
-            <div class="card text-left">
-              <div class="card-body">
-                <h4 class="card-title">USERS</h4>
-                <p class="card-text">
-                  <p key={user.id}>
-                    ID : {user.id}
-                    <p>Fist Name : {user.firstName}</p>
-                    <p>Last Name : {user.lastName}</p>
-                    <p>E-mail : {user.email}</p>
-                    <p>Phone number : {user.phoneNumber}</p>
-                    <p>Organization : {user.organization}</p>
-                  </p>
-                </p>
-              </div>
-            </div>
+const UserList = () => {
+  const { loading, error, data } = useQuery(GET_ALL_USERS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  return (
+    <div>
+      {data.getAllUserQuery.map((user) => (
+        <div key={user.id} className="card text-left">
+          <div className="card-body">
+            <h4 className="card-title">USER</h4>
+            <p className="card-text">
+              <p>ID: {user.id}</p>
+              <p>First Name: {user.firstName}</p>
+              <p>Last Name: {user.lastName}</p>
+              <p>Email: {user.email}</p>
+              <p>Phone Number: {user.phoneNumber}</p>
+              <p>Organization: {user.organization}</p>
+              <p>Role: {user.role}</p>
+            </p>
           </div>
-        ))}
-      </div>
-    );
-  }
-}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default UserList;
