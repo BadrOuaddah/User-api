@@ -17,6 +17,7 @@ public class CorsConfig {
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD")
                         .allowedHeaders("*")
                         .allowedOrigins("*");
+                registry.addMapping("/graphql").allowedOrigins("http://localhost:3000");
             }
         };
     }
