@@ -1,4 +1,5 @@
 scalar Long
+scalar Boolean
 
 schema{
     mutation:Mutation
@@ -8,7 +9,9 @@ schema{
 type Mutation{
     createUser(user:UserInput):UserOutput
     updateUser(userId:ID,user:UserInput):UserOutput
+    deleteUser(userId:ID,user:UserInput):Boolean
 }
+
 
 type Query{
     getAllUserQuery:[UserOutput]

@@ -64,4 +64,9 @@ public class UserController {
         return userService.updateUser(userId, userDto);
     }
 
+    @MutationMapping
+    public void deleteUser(@Argument long userId) throws Exception {
+        userService.deleteUser(userId);
+    }
+
 }
