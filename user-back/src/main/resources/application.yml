@@ -13,4 +13,5 @@ spring:
   graphql:
     graphiql:
       enabled: true
-      path: /graphiql
+      endpoint: /graphql
+      mapping: /graphiql
