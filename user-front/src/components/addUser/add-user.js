@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "./add-user.css";
 import { useMutation } from "@apollo/client";
-import { CREATE_USER, UPDATE_USER } from "../../graphql/requires";
+import { CREATE_USER } from "../../graphql/requires";
 
-const AddUser = ({ refetch }) => {
+const AddUser = () => {
   const [newUser, setNewUser] = useState({
-    id: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -13,31 +12,47 @@ const AddUser = ({ refetch }) => {
     organization: "",
     role: ""
   });
-  const [createUser] = useMutation(CREATE_USER);
-  const [updateUser] = useMutation(UPDATE_USER);
 
-  const handleInputChange = () => {};
+  const [createUser, { loading, error }] = useMutation(CREATE_USER);
 
-  const handleSubmit = async () => {};
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewUser((prevUser) => ({
+      ...prevUser,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await createUser({
+        variables: { user: newUser }
+      });
+      alert("User created successfully!");
+      setNewUser({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        organization: "",
+        role: ""
+      });
+    } catch (err) {
+      console.error("Error creating user:", err);
+    }
+  };
 
   return (
-    <div>
-      <form className="center">
-        {newUser.id && (
-          <input
-            type="text"
-            name="id"
-            value={newUser.id}
-            placeholder="User ID (Read-only)"
-            readOnly
-          />
-        )}
+    <div className="add-user-container">
+      <form className="add-user-form" onSubmit={handleSubmit}>
         <input
           type="text"
           name="firstName"
           value={newUser.firstName}
           placeholder="First Name"
           onChange={handleInputChange}
+          required
         />
         <br />
         <input
@@ -46,6 +61,7 @@ const AddUser = ({ refetch }) => {
           value={newUser.lastName}
           placeholder="Last Name"
           onChange={handleInputChange}
+          required
         />
         <br />
         <input
@@ -54,6 +70,7 @@ const AddUser = ({ refetch }) => {
           value={newUser.email}
           placeholder="Email"
           onChange={handleInputChange}
+          required
         />
         <br />
         <input
@@ -62,6 +79,7 @@ const AddUser = ({ refetch }) => {
           value={newUser.phoneNumber}
           placeholder="Phone Number"
           onChange={handleInputChange}
+          required
         />
         <br />
         <input
@@ -70,6 +88,7 @@ const AddUser = ({ refetch }) => {
           value={newUser.organization}
           placeholder="Organization"
           onChange={handleInputChange}
+          required
         />
         <br />
         <input
@@ -78,14 +97,16 @@ const AddUser = ({ refetch }) => {
           value={newUser.role}
           placeholder="Role"
           onChange={handleInputChange}
+          required
         />
         <br />
         <br />
-        <button type="button" onClick={handleSubmit}>
-          Add User
-          {/* {newUser.id ? "Update User" : "Add User"} */}
+        <button type="submit" disabled={loading}>
+          {loading ? "Adding..." : "Add User"}
         </button>
       </form>
+      <br />
+      {error && <p className="error-message">Error: {error.message}</p>}
     </div>
   );
 };
