@@ -1,4 +1,5 @@
 import React from "react";
+import "./user-list.css";
 import { gql, useQuery } from "@apollo/client";
 
 const GET_ALL_USERS = gql`
