@@ -1,6 +1,6 @@
 import React from "react";
 import "./user-list.css";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 
 const GET_ALL_USERS = gql`
   query {
@@ -16,8 +16,31 @@ const GET_ALL_USERS = gql`
   }
 `;
 
+const DELETE_USER = gql`
+  mutation DeleteUser($userId: ID!) {
+    deleteUser(userId: $userId)
+  }
+`;
+
 const UserList = () => {
-  const { loading, error, data } = useQuery(GET_ALL_USERS);
+  const { loading, error, data, refetch } = useQuery(GET_ALL_USERS);
+  const [deleteUser] = useMutation(DELETE_USER, {
+    onCompleted: () => {
+      refetch();
+    },
+    onError: (err) => {
+      console.error("Error deleting user:", err);
+      alert("Error deleting user: " + err.message);
+    }
+  });
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteUser({ variables: { userId: id } });
+    } catch (err) {
+      console.error("Error during delete operation:", err);
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -36,8 +59,13 @@ const UserList = () => {
               <p>Phone Number: {user.phoneNumber}</p>
               <p>Organization: {user.organization}</p>
               <p>Role: {user.role}</p>
-            <button className="delete-button" >DELETE</button>
             </p>
+            <button
+              className="delete-button"
+              onClick={() => handleDelete(user.id)}
+            >
+              DELETE
+            </button>
           </div>
         </div>
       ))}
