@@ -27,7 +27,7 @@ const UserList = () => {
       {data.getAllUserQuery.map((user) => (
         <div key={user.id} className="card text-left">
           <div className="card-body">
-            <h4 className="card-title">USER</h4>
+            <h4 className="card-title">USER {user.id}</h4>
             <p className="card-text">
               <p>ID: {user.id}</p>
               <p>First Name: {user.firstName}</p>
@@ -36,6 +36,7 @@ const UserList = () => {
               <p>Phone Number: {user.phoneNumber}</p>
               <p>Organization: {user.organization}</p>
               <p>Role: {user.role}</p>
+            <button className="delete-button" >DELETE</button>
             </p>
           </div>
         </div>

@@ -44,8 +44,8 @@ const AddUser = () => {
   };
 
   return (
-    <div className="add-user-container">
-      <form className="add-user-form" onSubmit={handleSubmit}>
+    <div>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="firstName"
@@ -106,7 +106,7 @@ const AddUser = () => {
         </button>
       </form>
       <br />
-      {error && <p className="error-message">Error: {error.message}</p>}
+      {error && <p>Error: {error.message}</p>}
     </div>
   );
 };
