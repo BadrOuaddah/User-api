@@ -9,7 +9,7 @@ schema{
 type Mutation{
     createUser(user:UserInput):UserOutput
     updateUser(userId:ID,user:UserInput):UserOutput
-    deleteUser(userId:ID,user:UserInput):Boolean
+    deleteUser(userId: ID): Boolean
 }
 
 
