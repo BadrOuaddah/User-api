@@ -101,8 +101,8 @@ const AddUser = () => {
         />
         <br />
         <br />
-        <button type="submit" disabled={loading}>
-          {loading ? "Adding..." : "Add User"}
+        <button type="submit" className="add-button" disabled={loading}>
+          {loading ? "ADDING..." : "ADD"}
         </button>
       </form>
       <br />
