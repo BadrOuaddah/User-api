@@ -1,5 +1,6 @@
 import React from "react";
 import "./user-list.css";
+import UpdateUser from "../updateUser/update-user";
 import { gql, useQuery, useMutation } from "@apollo/client";
 
 const GET_ALL_USERS = gql`
@@ -59,13 +60,15 @@ const UserList = () => {
               <p>Phone Number: {user.phoneNumber}</p>
               <p>Organization: {user.organization}</p>
               <p>Role: {user.role}</p>
+              <UpdateUser userId={user.id} />
+              <br />
+              <button
+                className="delete-button"
+                onClick={() => handleDelete(user.id)}
+              >
+                DELETE
+              </button>
             </p>
-            <button
-              className="delete-button"
-              onClick={() => handleDelete(user.id)}
-            >
-              DELETE
-            </button>
           </div>
         </div>
       ))}
