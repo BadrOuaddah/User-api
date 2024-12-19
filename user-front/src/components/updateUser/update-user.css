@@ -1,0 +1,26 @@
+.update-button {
+    padding: 10px 20px;
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.update-button:hover {
+    background-color: #e0a800;
+}
+
+.confirm-button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.confirm-button:hover {
+    background-color: #0056b3;
+}
+
+.update-border {
+    border-style: solid;
+    border-color: #ffc107;
+}
