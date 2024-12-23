@@ -1,54 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./user-list.css";
 import UpdateUser from "../updateUser/update-user";
-import { gql, useQuery, useMutation } from "@apollo/client";
-
-const GET_ALL_USERS = gql`
-  query {
-    getAllUserQuery {
-      id
-      firstName
-      lastName
-      email
-      phoneNumber
-      organization
-      role
-    }
-  }
-`;
-
-const DELETE_USER = gql`
-  mutation DeleteUser($userId: ID!) {
-    deleteUser(userId: $userId)
-  }
-`;
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUsers, deleteUser } from "../../redux/userSlice";
 
 const UserList = () => {
-  const { loading, error, data, refetch } = useQuery(GET_ALL_USERS);
-  const [deleteUser] = useMutation(DELETE_USER, {
-    onCompleted: () => {
-      refetch();
-    },
-    onError: (err) => {
-      console.error("Error deleting user:", err);
-      alert("Error deleting user: " + err.message);
-    }
-  });
+  const dispatch = useDispatch();
+  const { list: users, loading, error } = useSelector((state) => state.users);
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteUser({ variables: { userId: id } });
-    } catch (err) {
-      console.error("Error during delete operation:", err);
-    }
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  const handleDelete = (id) => {
+    dispatch(deleteUser(id));
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
-      {data.getAllUserQuery.map((user) => (
+      {users.map((user) => (
         <div key={user.id} className="card text-left">
           <div className="card-body">
             <h4 className="card-title">USER {user.id}</h4>
