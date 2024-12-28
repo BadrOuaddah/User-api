@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./user-list.css";
 import UpdateUser from "../updateUser/update-user";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUsers, deleteUser } from "../../redux/userSlice";
+import { fetchUsers, deleteUser } from "../../redux/slices/userSlice";
 
 const UserList = () => {
   const dispatch = useDispatch();

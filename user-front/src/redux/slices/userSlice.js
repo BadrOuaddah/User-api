@@ -6,7 +6,7 @@ const userSlice = createSlice({
     userList: []
   },
   reducers: {
-    setUsers: (state, action) => {
+    fetchUsers: (state, action) => {
       state.userList = action.payload;
     },
     addUser: (state, action) => {
@@ -28,5 +28,5 @@ const userSlice = createSlice({
   }
 });
 
-export const { setUsers, addUser, deleteUser, updateUser } = userSlice.actions;
+export const { fetchUsers, addUser, deleteUser, updateUser } = userSlice.actions;
 export default userSlice.reducer;
