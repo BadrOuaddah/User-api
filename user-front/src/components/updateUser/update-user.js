@@ -6,8 +6,6 @@ import { UPDATE_USER } from "../../graphql/requires";
 const UpdateUser = ({ userId }) => {
   const [updateUser, { loading }] = useMutation(UPDATE_USER);
   const [isShownForm, setIsShownForm] = useState(false);
-  const [isConfirmed, setIsConfirmed] = useState(false);
-  console.log(setIsConfirmed);
   const [userUpdated, setUserUpdated] = useState({
     firstName: "",
     lastName: "",
@@ -17,10 +15,8 @@ const UpdateUser = ({ userId }) => {
     role: ""
   });
 
-  const handleClick = (event) => {
-    if (!isConfirmed) {
-      setIsShownForm((current) => !current);
-    }
+  const handleClick = () => {
+    setIsShownForm((current) => !current);
   };
 
   const handleInputChange = (e) => {
@@ -61,8 +57,8 @@ const UpdateUser = ({ userId }) => {
               type="text"
               name="lastName"
               placeholder="Last Name"
-              onChange={handleInputChange}
               value={userUpdated.lastName}
+              onChange={handleInputChange}
               required
             />
             <br />
