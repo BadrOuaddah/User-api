@@ -6,7 +6,7 @@ import { fetchUsers, deleteUser } from "../../redux/slices/userSlice";
 
 const UserList = () => {
   const dispatch = useDispatch();
-  const { list: users, loading, error } = useSelector((state) => state.users);
+  const { userList: users, loading, error } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(fetchUsers());
