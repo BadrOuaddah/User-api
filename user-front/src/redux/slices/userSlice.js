@@ -33,12 +33,12 @@ export const updateUser = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
   "users/deleteUser",
-  async (userId) => {
+  async ({ userId }) => {
     const { data } = await client.mutate({
       mutation: DELETE_USER,
-      variables: { id: userId }
+      variables: { userId }
     });
-    return data.DELETE_USER;
+    return data.deleteUser;
   }
 );
 
