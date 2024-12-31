@@ -33,7 +33,6 @@ public class UserController {
         return new ResponseEntity<>(userService.getUser(userId), HttpStatus.OK);
     }
 
-
     @PostMapping
     public ResponseEntity<UserDto> addNewUser(@RequestBody UserDto userDto) {
         return new ResponseEntity<>(userService.addNewUser(userDto), HttpStatus.CREATED);
